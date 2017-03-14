@@ -1,0 +1,22 @@
+import pymel.core as pm
+
+#select transform object
+for node in pm.selectedNodes():
+    #list only groups where are objects and substract 'root'
+    listH = node.split('|')[1:-1]
+    #replace geo_all by locators_all
+    listH[1] = 'locators_all'
+    groupList = []
+    
+    for elem in listH:
+        listPath=[]
+        groupList+= ['|'] + [elem]
+        listPath = ''.join(groupList)
+        
+        if not pm.objExists(listPath):
+            listPathReplaced = listPath.replace(elem, "")
+            newGroup = pm.group(em=1, name=elem)
+            pm.parent(newGroup, listPathReplaced)
+            
+
+
